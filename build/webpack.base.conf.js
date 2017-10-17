@@ -47,6 +47,7 @@ module.exports = {
         include: [resolve('src'), resolve('test')]
       },
       /**
+       * css-loaderはvue-loaderにデフォルト組み込まれているため不要
       {
         test: /\.css$/,
         loader: ['style-loader','css-loader']

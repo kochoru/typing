@@ -10,6 +10,15 @@ import router from './router'
 Vue.config.productionTip = false
 Vue.use(ElementUI, { locale })
 
+// 任意のタイミングでフォーカスするためのカスタムディレクティブ
+Vue.directive('focus', {
+  inserted: function (el, binding) {
+    if (binding.value) {
+      el.focus()
+    }
+  }
+})
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

@@ -1,9 +1,9 @@
 <template>
   <div class="typing">
     <h1> {{ mondai }} </h1>
-    <el-input v-model="input" autofocus="autofocus"
+    <el-input class="input" v-model="input" v-focus="focus"
       v-on:change="checkKeyCode" ></el-input>
-    <el-button type="primary" v-on:click="startTyping">開始する</el-button>
+    <el-button type="primary" class="startButton" v-on:click="startTyping">開始する</el-button>
   </div>
 </template>
 
@@ -16,7 +16,8 @@ export default {
       input: '',
       charIndex: 0,
       wordChars: [],
-      score: 0
+      score: 0,
+      focus: false
     }
   },
   methods: {
@@ -50,6 +51,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.startButton {
+  
+}
 </style>
