@@ -6,13 +6,14 @@ import locale from 'element-ui/lib/locale/lang/ja'
 import 'element-ui/lib/theme-default/index.css'
 import App from './App'
 import router from './router'
+import navigation from '@/components/Navigation'
 
 Vue.config.productionTip = false
 Vue.use(ElementUI, { locale })
 
 // 任意のタイミングでフォーカスするためのカスタムディレクティブ
 Vue.directive('focus', {
-  inserted: function (el, binding) {
+  componentUpdated: function (el, binding) {
     if (binding.value) {
       el.focus()
     }
@@ -24,5 +25,8 @@ new Vue({
   el: '#app',
   router,
   template: '<App/>',
-  components: { App }
+  components: {
+    App,
+    navigation
+  }
 })
