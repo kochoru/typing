@@ -3,16 +3,32 @@
     <h1 class="score">あなたのスコアは： {{ score }}</h1>
     <h1 class="mondai"> {{ mondai }} </h1>
     <input type="email" class="input" v-model="input" v-focus="focus"
-      v-on:keyup="checkKeyCode">
-    <el-button type="primary" size="large" class="startButton"
-      v-on:click="startTyping" :disabled="buttonDisabled">はじめる</el-button>
+      v-on:keyup="checkKeyCode" />
+    <ul>
+      <li>
+        <el-button type="info" size="large" class="startButton"
+          v-on:click="startPractice" v-bind:disabled="practiceButtonDisabled">れんしゅう</el-button>
+      </li>
+      <li>
+        <el-button type="danger" size="large" class="startButton"
+          v-on:click="startProduction" v-bind:disabled="productionButtonDisabled">ほんばん</el-button>
+      </li>
+    </ul>
     <footer>
-      <el-progress :percentage="percentage" :show-text='false' :status="progressStatus"></el-progress>
+      <h2>
+        <countdown v-bind:time="remainingTime" v-bind:interval="50" v-bind:autoStart="false" ref="countdown" v-on:countdownprogress="updateProgress">
+          <template slot-scope="props">のこりじかん {{ props.hours }} : {{ props.minutes}} : {{props.seconds}} </template>
+        </countdown>
+      </h2>
+      <el-progress v-bind:percentage="percentage" v-bind:show-text='false' v-bind:status="progressStatus"></el-progress>
     </footer>
   </div>
 </template>
 
 <script>
+import Vue from 'vue'
+import VueCountdown from '@xkeshi/vue-countdown'
+
 export default {
   name: 'typing',
   data () {
@@ -25,12 +41,32 @@ export default {
       score: 0,
       focus: false,
       percentage: 100,
-      elapsedTimeMS: 0,
-      timer: 0,
-      buttonDisabled: false,
+      practiceButtonDisabled: false,
+      productionButtonDisabled: false,
       progressStatus: '',
+      remainingTime: 0,
+      charangedCount: 0,
 
       TOTAL_TIME: 60000
+    }
+  },
+  watch: {
+    percentage: function (val) {
+      if (val < 30 && val !== 0) {
+        this.progressStatus = 'exception'
+      }
+      if (val < 0) {
+        this.$refs.countdown.stop()
+        this.charangedCount++
+      }
+    },
+    charangedCount: function (val) {
+      if (val === 1) {
+        this.productionButtonDisabled = false
+      }
+      if (val === 2) {
+        // 点数を表示、表彰状モーダルとか面白そう
+      }
     }
   },
   methods: {
@@ -61,10 +97,18 @@ export default {
       console.log(this.mondai)
       this.wordChars = this.mondai.toUpperCase().split('')
     },
+    startPractice: function () {
+      this.practiceButtonDisabled = true
+      this.productionButtonDisabled = true
+      this.startTyping()
+    },
+    startProduction: function () {
+      this.productionButtonDisabled = true
+      this.startTyping()
+    },
     startTyping: function () {
       this.reloadNextWord()
       this.focus = true
-      this.buttonDisabled = true
 
       this.startCountDown()
     },
@@ -81,24 +125,20 @@ export default {
       })
     },
     startCountDown: function () {
-      this.elapsedTimeMS = 0
+      this.remainingTime = 60 * 1000
       this.percentage = 100
-      this.updateProgress()
+      setTimeout(() => {
+        this.$refs.countdown.start()
+      }, 50)
     },
-    updateProgress: function () {
-      this.elapsedTimeMS = this.elapsedTimeMS + 50
-      this.percentage = this.percentage - ((this.elapsedTimeMS / this.TOTAL_TIME * 100) / 1000)
-      this.timer = setTimeout(this.updateProgress, 50)
-      if (this.percentage <= 30) {
-        this.progressStatus = 'exception'
-      }
-      if (this.percentage <= 0) {
-        this.percentage = 0
-        clearTimeout(this.timer)
-      }
+    updateProgress: function (data) {
+      this.percentage = data.seconds * 1000 / this.TOTAL_TIME * 100
+      console.log(this.percentage)
     }
   }
 }
+
+Vue.component('countdown', VueCountdown)
 </script>
 
 <style scoped>
@@ -144,7 +184,7 @@ footer {
   position: fixed;
   bottom: 0;
   width: 98%;
-  height: 40px;
+  height: 100px;
   margin-bottom: 30px;
 }
 </style>
