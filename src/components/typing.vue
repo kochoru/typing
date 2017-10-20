@@ -84,6 +84,10 @@ export default {
         this.buttonDisabled = false
         this.buttonType = 'danger'
         this.buttonText = 'ほんばん'
+
+        this.focus = false
+
+        this.score = 0
       }
       if (val === 2) {
         // 点数を表示、表彰状モーダルとか面白そう
