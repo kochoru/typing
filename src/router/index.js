@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Hello from '@/components/Hello'
-import Typing from '@/components/typing'
+import Typing from '@/components/Typing'
 
 Vue.use(Router)
 
