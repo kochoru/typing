@@ -15,11 +15,16 @@
   },
   "dependencies": {
     "@xkeshi/vue-countdown": "^0.4.0",
-    "element-ui": "^1.4.6",
-    "vue": "^2.3.3",
-    "vue-router": "^2.3.1",
+    "axios": "^0.17.0",
+    "babel-preset-env": "^1.6.1",
+    "chromedriver": "^2.33.2",
+    "copy-webpack-plugin": "^4.2.0",
+    "element-ui": "^1.4.8",
+    "qs": "^6.5.1",
+    "vue": "^2.5.2",
+    "vue-router": "^3.0.1",
     "vue-socket.io": "^2.1.1-a",
-    "vuex": "^2.3.1"
+    "vuex": "^3.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.2",
@@ -78,7 +83,7 @@
     "ora": "^1.2.0",
     "rimraf": "^2.6.0",
     "url-loader": "^0.5.8",
-    "vue-loader": "^12.1.0",
+    "vue-loader": "^13.3.0",
     "vue-style-loader": "^3.0.1",
     "vue-template-compiler": "^2.3.3",
     "webpack": "^2.6.1",

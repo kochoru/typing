@@ -122,16 +122,8 @@ export default {
       console.log(this.mondai)
       this.wordChars = this.mondai.toUpperCase().split('')
     },
-    startPractice: function () {
-      this.buttonDisabled = true
-      this.buttonDisabled = true
-      this.startTyping()
-    },
-    startProduction: function () {
-      this.buttonDisabled = true
-      this.startTyping()
-    },
     startTyping: function () {
+      this.buttonDisabled = true
       this.reloadNextWord()
       this.focus = true
 

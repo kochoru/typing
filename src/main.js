@@ -6,6 +6,7 @@ import locale from 'element-ui/lib/locale/lang/ja'
 import 'element-ui/lib/theme-default/index.css'
 import App from './App'
 import router from './router'
+import store from './store/store'
 
 Vue.config.productionTip = false
 Vue.use(ElementUI, { locale })
@@ -23,6 +24,7 @@ Vue.directive('focus', {
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   components: {
     App
