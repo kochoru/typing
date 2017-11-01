@@ -31,7 +31,7 @@ const actions = {
   // commit は context.commit の分割代入
   [LOGIN] ({ commit }, state) {
     httpClient.post({
-      url: '/login',
+      url: '/user',
       data: qs.stringify(state)
     }).then((res) => {
       commit(LOGIN, res)
@@ -40,7 +40,14 @@ const actions = {
     })
   },
   [REGISTER_RESULT] ({ commit }, state) {
-
+    httpClient.post({
+      url: '/playInfo/result',
+      data: qs.stringify(state)
+    }).then((res) => {
+      commit(REGISTER_RESULT, res)
+    }).catch((res) => {
+      // 一旦nop
+    })
   }
 }
 const getters = {}
@@ -48,6 +55,9 @@ const mutations = {
   [LOGIN] (state, data) {
     state.playerInfo.challengeCount = data.challengeCount
     state.playerInfo.adminFlg = data.adminFlg
+  },
+  [REGISTER_RESULT] (state, data) {
+    
   }
 }
 
