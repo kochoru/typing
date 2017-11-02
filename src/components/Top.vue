@@ -42,12 +42,15 @@
 </template>
 
 <script>
+import { mapState, mapMutations, mapActions } from 'vuex'
+import { LOGIN } from '../store/mutation-types'
+
 export default {
   data() {
     return {
+      departmentOptions: ['a', 'i'],
       form: {
         department: '',
-        departmentOptions: ['a', 'i'],
         id: '',
         name: '',
         handleName: '',
@@ -56,7 +59,16 @@ export default {
     }
   },
   methods: {
-    
+    ...mapActions([
+      LOGIN
+    ]),
+    ...mapMutations([
+      // `thid.bindForm()`を'this.$store.commit('bindForm')にマッピング
+      bindForm
+    ]),
+    sendForm: function() {
+      this.bindForm()
+    }
   }
 }
 </script>

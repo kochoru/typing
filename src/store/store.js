@@ -57,7 +57,14 @@ const mutations = {
     state.playerInfo.adminFlg = data.adminFlg
   },
   [REGISTER_RESULT] (state, data) {
-    
+
+  },
+  bindTopForm (state, formData) {
+    state.playerInfo.department = formData.department
+    state.playerInfo.id = formData.id
+    state.playerInfo.name = formData.name
+    state.playerInfo.handleName = formData.handleName
+    state.playerInfo.displayNameEnable = formData.displayNameEnable
   }
 }
 
