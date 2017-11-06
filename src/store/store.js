@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import qs from 'qs'
+import router from '../router'
 
 import {
   LOGIN,
@@ -34,9 +35,10 @@ const actions = {
       url: '/user',
       data: qs.stringify(state)
     }).then((res) => {
-      commit(LOGIN, res)
+      commit(LOGIN, res.data)
+      router.push({ path: 'Typing' })
     }).catch((res) => {
-      // nop
+      router.push({ path: 'Top' })
     })
   },
   [REGISTER_RESULT] ({ commit }, state) {
@@ -44,7 +46,7 @@ const actions = {
       url: '/playInfo/result',
       data: qs.stringify(state)
     }).then((res) => {
-      commit(REGISTER_RESULT, res)
+      commit(REGISTER_RESULT, res.data)
     }).catch((res) => {
       // 一旦nop
     })

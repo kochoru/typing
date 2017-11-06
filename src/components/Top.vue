@@ -36,17 +36,17 @@
     </el-form-item>
     <el-form-item>
       <el-button type="primary" v-on:click="sendForm">タイピングする</el-button>
-      <el-button type="infor" v-on:click="showRanking"></el-button>
+      <el-button type="info" v-on:click="showRanking">ランキングを見る</el-button>
     </el-form-item>
   </el-form>
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from 'vuex'
+import { mapMutations, mapActions } from 'vuex'
 import { LOGIN } from '../store/mutation-types'
 
 export default {
-  data() {
+  data () {
     return {
       departmentOptions: ['a', 'i'],
       form: {
@@ -64,10 +64,14 @@ export default {
     ]),
     ...mapMutations([
       // `thid.bindForm()`を'this.$store.commit('bindForm')にマッピング
-      bindForm
+      'bindTopForm'
     ]),
-    sendForm: function() {
-      this.bindForm()
+    sendForm: function () {
+      this.bindTopForm(this.form)
+      this.LOGIN()
+    },
+    showRanking: function () {
+      this.$router.push('Ranking')
     }
   }
 }
