@@ -7,6 +7,7 @@ import 'element-ui/lib/theme-default/index.css'
 import App from './App'
 import router from './router'
 import store from './store/store'
+import 'es6-promise/auto'
 
 Vue.config.productionTip = false
 Vue.use(ElementUI, { locale })
