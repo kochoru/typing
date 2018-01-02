@@ -46,7 +46,7 @@ import { mapState, mapMutations, mapActions } from 'vuex'
 import { LOGIN } from '../store/mutation-types'
 
 export default {
-  data() {
+  data () {
     return {
       departmentOptions: ['a', 'i'],
       form: {
@@ -66,7 +66,7 @@ export default {
       // `thid.bindForm()`を'this.$store.commit('bindForm')にマッピング
       bindForm
     ]),
-    sendForm: function() {
+    sendForm: function () {
       this.bindForm()
     }
   }

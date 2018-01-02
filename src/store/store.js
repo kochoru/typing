@@ -31,7 +31,7 @@ const actions = {
   // commit は context.commit の分割代入
   [LOGIN] ({ commit }, state) {
     httpClient.post({
-      url: '/user',
+      url: '/player/' + state.playerInfo.id,
       data: qs.stringify(state)
     }).then((res) => {
       commit(LOGIN, res)
@@ -40,8 +40,8 @@ const actions = {
     })
   },
   [REGISTER_RESULT] ({ commit }, state) {
-    httpClient.post({
-      url: '/playInfo/result',
+    httpClient.put({
+      url: '/player/' + state.playerInfo.id + '/result',
       data: qs.stringify(state)
     }).then((res) => {
       commit(REGISTER_RESULT, res)
