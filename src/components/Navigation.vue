@@ -6,8 +6,12 @@
     </el-menu-item>
     <el-submenu index="2">
       <template slot="title">ランキング</template>
-      <el-menu-item index="2-1">Personal</el-menu-item>
-      <el-menu-item index="2-2">All</el-menu-item>
+      <el-menu-item index="2-1">
+        <router-link to="/personal">Personal</router-link>
+      </el-menu-item>
+      <el-menu-item index="2-2">
+        <router-link to="/ranking">All</router-link>
+      </el-menu-item>
     </el-submenu>
   </el-menu>
 </template>

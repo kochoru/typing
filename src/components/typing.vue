@@ -6,6 +6,7 @@
       class="input"
       v-model="input"
       v-focus="focus"
+      v-bind:disabled="inputDisabled"
       v-on:keyup="checkKeyCode" />
     <ul>
       <li>
@@ -39,6 +40,8 @@
 <script>
 import Vue from 'vue'
 import VueCountdown from '@xkeshi/vue-countdown'
+import { mapState, mapActions } from 'vuex'
+import { REGISTER_RESULT } from '../store/mutation-types'
 
 export default {
   name: 'typing',
@@ -50,6 +53,7 @@ export default {
       charIndex: 0,
       wordChars: [],
       score: 0,
+      inputDisabled: true,
       focus: false,
       percentage: 100,
 
@@ -59,13 +63,17 @@ export default {
 
       progressStatus: '',
       remainingTime: 0,
-      charangedCount: 0,
+      challengedCount: 0,
       counting: false,
       firstProgressFlg: true,
 
       TOTAL_TIME: 60000
     }
   },
+  computed: mapState({
+    // stateの状態を取得
+    challengedCount: state => state.playerInfo.challengedCount
+  }),
   watch: {
     percentage: function (val) {
       if (val < 30 && val !== 0) {
@@ -73,18 +81,21 @@ export default {
       }
       if (val <= 0) {
         this.counting = false
-        this.charangedCount++
+        this.challengedCount++
         this.percentage = 100
         this.progressStatus = ''
         this.firstProgressFlg = true
+
+        this.sendResults()
       }
     },
-    charangedCount: function (val) {
+    challengedCount: function (val) {
       if (val === 1) {
         this.buttonDisabled = false
         this.buttonType = 'danger'
         this.buttonText = 'ほんばん'
-
+        this.mondai = ''
+        this.inputDisabled = true
         this.focus = false
 
         this.score = 0
@@ -95,6 +106,9 @@ export default {
     }
   },
   methods: {
+    ...mapActions([
+      REGISTER_RESULT
+    ]),
     checkKeyCode: function (event) {
       let keyStr = String.fromCharCode(event.keyCode)
       let inputStrs = this.input.split('')
@@ -125,6 +139,7 @@ export default {
     startTyping: function () {
       this.buttonDisabled = true
       this.reloadNextWord()
+      this.inputDisabled = false
       this.focus = true
 
       this.startCountDown()
@@ -153,57 +168,61 @@ export default {
         this.percentage = data.seconds * 1000 / this.TOTAL_TIME * 100
         console.log(this.percentage)
       }
+    },
+    sendResults: function () {
+      this.REGISTER_RESULT(this.score, this.challengedCount)
     }
   }
 }
 
 Vue.component('countdown', VueCountdown)
+
 </script>
 
 <style scoped>
-.typing {
-  margin-top: 10px
-}
+  .typing {
+    margin-top: 10px;
+  }
 
-.score {
-  text-align: right;
-  font-size: 50px;
-  color: deepskyblue;
-  margin-right: 20px;
-}
+  .score {
+    text-align: right;
+    font-size: 50px;
+    color: deepskyblue;
+    margin-right: 20px;
+  }
 
-.mondai {
-  margin-top: 100px;
-}
+  .mondai {
+    margin-top: 100px;
+  }
 
-.startButton {
-  margin: 10px;
-  margin-top: 100px;
-  font-family: 'Nico Moji', 'Nikukyu', 'Avenir', Helvetica, Arial, sans-serif;
-  font-size: 50px;
-}
+  .startButton {
+    margin: 10px;
+    margin-top: 100px;
+    font-family: "Nico Moji", "Nikukyu", "Avenir", Helvetica, Arial, sans-serif;
+    font-size: 50px;
+  }
 
-.input {
-  display: block;
-  margin: auto;
-  margin-top: 50px;
-  width: 600px;
-  height: 40px;
-  font-size: 28px;
-  text-align: center;
-  border-top: none;
-  border-right: none;
-  border-left: none;
-  border-radius: 5px;
-  ime-mode: inactive;
-}
+  .input {
+    display: block;
+    margin: auto;
+    margin-top: 50px;
+    width: 600px;
+    height: 40px;
+    font-size: 28px;
+    text-align: center;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-radius: 5px;
+    ime-mode: inactive;
+  }
 
-footer {
-  text-align: center;
-  position: fixed;
-  bottom: 0;
-  width: 98%;
-  height: 100px;
-  margin-bottom: 30px;
-}
+  footer {
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 98%;
+    height: 100px;
+    margin-bottom: 30px;
+  }
 </style>

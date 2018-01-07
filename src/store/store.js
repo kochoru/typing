@@ -24,28 +24,34 @@ const state = {
     displayNameEnable: false,
     score: 0,
     challengeCount: 0,
-    adminFlg: 0
+    adminFlg: false
   }
 }
 const actions = {
   // 定数を関数名として使用できる ES2015 の算出プロパティ名機能
   // commit は context.commit の分割代入
-  [LOGIN] ({ commit }, state) {
-    httpClient.post({
-      url: '/player/' + state.playerInfo.id,
-      data: qs.stringify(state)
-    }).then((res) => {
-      commit(LOGIN, res.data)
-      router.push({ path: 'Typing' })
-    }).catch((res) => {
-      router.push({ path: 'Top' })
-    })
+  [LOGIN] ({ commit, state }) {
+    try {
+      httpClient.post(
+        '/player/' + state.playerInfo.id,
+        qs.stringify(state.playerInfo)
+      ).then((res) => {
+        commit(LOGIN, res.data)
+        router.push({ path: '/typing' })
+      }).catch((res) => {
+        console.log(res)
+        router.push({ path: '/' })
+      })
+    } catch (error) {
+      console.log(error)
+    }
   },
-  [REGISTER_RESULT] ({ commit }, state) {
-    httpClient.put({
-      url: '/player/' + state.playerInfo.id + '/result',
-      data: qs.stringify(state)
-    }).then((res) => {
+  [REGISTER_RESULT] ({ commit, state }, score, challengeCount) {
+    commit(REGISTER_RESULT, score, challengeCount)
+    httpClient.put(
+      '/player/' + state.playerInfo.id + '/result',
+      qs.stringify(state)
+    ).then((res) => {
       commit(REGISTER_RESULT, res.data)
     }).catch((res) => {
       // 一旦nop
@@ -58,8 +64,9 @@ const mutations = {
     state.playerInfo.challengeCount = data.challengeCount
     state.playerInfo.adminFlg = data.adminFlg
   },
-  [REGISTER_RESULT] (state, data) {
-
+  [REGISTER_RESULT] (state, score, challengeCount) {
+    state.playerInfo.score = score
+    state.playerInfo.challengeCount = challengeCount
   },
   bindTopForm (state, formData) {
     state.playerInfo.department = formData.department

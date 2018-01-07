@@ -6,14 +6,15 @@
     stripe
     class="rankingTable">
     <el-table-column
-      prop="rank"
       label="ランク"
+      type="index"
       width="70px">
     </el-table-column>
     <el-table-column
       prop="name"
       label="しめい"
-      width="180px">
+      width="180px"
+      v-if="displayNameEnable">
     </el-table-column>
     <el-table-column
       prop="handleName"
@@ -36,47 +37,29 @@
 
 <script>
 import axios from 'axios'
+import router from '../router'
 
 const httpClient = axios.create({
   baseURL: 'http://localhost:8080'
 })
 
 export default {
+  name: 'ranking',
   data () {
     return {
-      tableData: [
-        {
-          rank: 1,
-          name: 'ボボボーボ・ボーボボ',
-          handleName: 'ボボボーボ・ボーボボ',
-          department: 'ボボボーボ・ボーボボ',
-          score: 10000
-        },
-        {
-          rank: 2,
-          name: 'ボボボーボ・ボーボボ',
-          handleName: 'ボボボーボ・ボーボボ',
-          department: 'ボボボーボ・ボーボボ',
-          score: 1000
-        },
-        {
-          rank: 3,
-          name: 'ボボボーボ・ボーボボ',
-          handleName: 'ボボボーボ・ボーボボ',
-          department: 'ボボボーボ・ボーボボ',
-          score: 100
-        }
-      ]
+      tableData: []
     }
   },
-  beforeCreate: function () {
-
+  mounted: function () {
+    this.fetchRanking()
   },
   methods: {
     fetchRanking: function () {
       httpClient.get('/player/ranking')
       .then((res) => {
-
+        this.tableData = res.data
+      }).catch((res) => {
+        router.push({ path: 'Top' })
       })
     }
   }

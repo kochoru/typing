@@ -8,7 +8,7 @@
         clearable="clearable"
         aria-required="true">
         <el-option
-          v-for="item in form.departmentOptions"
+          v-for="item in departmentOptions"
           v-bind:key="item.value"
           v-bind:label="item.label"
           v-bind:value="item.value"></el-option>
@@ -46,8 +46,14 @@
 <script>
 import { mapMutations, mapActions } from 'vuex'
 import { LOGIN } from '../store/mutation-types'
+import axios from 'axios'
+
+const httpClient = axios.create({
+  baseURL: 'http://localhost:8080'
+})
 
 export default {
+  name: 'top',
   data () {
     return {
       departmentOptions: ['a', 'i'],
@@ -59,6 +65,9 @@ export default {
         displayNameEnable: ''
       }
     }
+  },
+  mounted: function () {
+    this.fetchDepartment()
   },
   methods: {
     ...mapActions([
@@ -73,7 +82,15 @@ export default {
       this.LOGIN()
     },
     showRanking: function () {
-      this.$router.push('Ranking')
+      this.$router.push('/ranking')
+    },
+    fetchDepartment: function () {
+      httpClient.get('/department')
+      .then((res) => {
+        this.departmentOptions = res.data
+      }).catch((res) => {
+        console.log(res)
+      })
     }
   }
 }
