@@ -101,6 +101,7 @@ export default {
         this.score = 0
       }
       if (val === 2) {
+        this.inputDisabled = true
         // 点数を表示、表彰状モーダルとか面白そう
       }
     }
@@ -112,6 +113,11 @@ export default {
     checkKeyCode: function (event) {
       let keyStr = String.fromCharCode(event.keyCode)
       let inputStrs = this.input.split('')
+      if (keyStr === '8') {
+        // Backspaceが押下された際は何もしない
+        this.charIndex--
+        return
+      }
       if (this.wordChars[this.charIndex] === keyStr) {
         this.charIndex++
         if (this.charIndex === this.wordChars.length) {
@@ -120,11 +126,11 @@ export default {
           this.reloadNextWord()
           this.input = ''
         }
-      } else {
-        if (inputStrs.length >= this.wordChars.length) {
-          this.openFailureMessage()
-          this.input = ''
-        }
+      }
+      if (inputStrs.length >= this.wordChars.length) {
+        this.openFailureMessage()
+        this.input = ''
+        this.charIndex = 0
       }
     },
     reloadNextWord: function () {
