@@ -4,7 +4,7 @@ import Hello from '@/components/Hello'
 import Typing from '@/components/Typing'
 import Top from '@/components/Top'
 import Ranking from '@/components/Ranking'
-import Results from '@/components/Results'
+import Error from '@/components/Error'
 
 Vue.use(Router)
 
@@ -31,9 +31,9 @@ export default new Router({
       component: Ranking
     },
     {
-      path: '/results',
-      name: 'Results',
-      component: Results
+      path: '/error',
+      name: 'Error',
+      component: Error
     }
   ]
 })

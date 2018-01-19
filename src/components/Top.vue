@@ -1,4 +1,7 @@
 <template>
+  <div class="top">
+    <h1 class="caution">!!注意事項!!</h1>
+    <h2>・一度実施された方は二度目は実施できません。</h2>
   <el-form
     ref="form"
     v-bind:model="form"
@@ -6,7 +9,7 @@
     size="medium"
     class="form"
     v-bind:rules="rules">
-    <el-form-item label="Department">
+    <el-form-item label="Department" prop="department">
       <el-select
         size="large"
         v-model="form.department"
@@ -20,13 +23,13 @@
           v-bind:value="item.value"></el-option>
       </el-select>
     </el-form-item>
-    <el-form-item label="ID">
+    <el-form-item label="ID" prop="id">
       <el-input
         v-model="form.id"
         placeholder="XXXXXXXX"
         required></el-input>
     </el-form-item>
-    <el-form-item label="おなまえ">
+    <el-form-item label="おなまえ" prop="name">
       <el-input
         v-model="form.name"
         placeholder="氏名をフルネームで入力ください（半角全角はどっちでもいいです）"
@@ -47,6 +50,7 @@
       <el-button type="info" v-on:click="showRanking">ランキングを見る</el-button>
     </el-form-item>
   </el-form>
+  </div>
 </template>
 
 <script>
@@ -113,8 +117,16 @@ export default {
       'bindTopForm'
     ]),
     submitForm: function (form) {
-      this.bindTopForm(this.form)
-      this.LOGIN()
+      this.$refs[form].validate((valid) => {
+        if (valid) {
+          this.bindTopForm(this.form)
+          this.LOGIN()
+        } else {
+          this.$alert('入力に誤りがあります', 'バリデーションエラー', {
+            confirmButtonText: 'OK'
+          })
+        }
+      })
     },
     showRanking: function () {
       this.$router.push('/ranking')
@@ -132,6 +144,10 @@ export default {
 </script>
 
 <style>
+  .caution {
+    color: red
+  }
+
   .form {
     width: 800px;
     margin: auto;

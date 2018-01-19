@@ -25,7 +25,8 @@ const state = {
     score: 0,
     challengeCount: 0,
     adminFlg: false
-  }
+  },
+  errorMessage: '!!'
 }
 const actions = {
   // 定数を関数名として使用できる ES2015 の算出プロパティ名機能
@@ -37,12 +38,17 @@ const actions = {
         qs.stringify(state.playerInfo)
       ).then((res) => {
         commit(LOGIN, res.data)
-        router.push({ path: '/typing' })
+        if (state.playerInfo.challengeCount >= 2) {
+          router.push({ path: '/error' })
+        } else {
+          router.push({ path: '/typing' })
+        }
       }).catch((res) => {
         console.log(res)
         router.push({ path: '/' })
       })
     } catch (error) {
+      // Debug用try catch
       console.log(error)
     }
   },
@@ -63,6 +69,9 @@ const mutations = {
   [LOGIN] (state, data) {
     state.playerInfo.challengeCount = data.challengeCount
     state.playerInfo.adminFlg = data.adminFlg
+    if (data.challengeCount >= 2) {
+      state.errorMessage = 'チャレンジは一度のみです'
+    }
   },
   [REGISTER_RESULT] (state, score, challengeCount) {
     state.playerInfo.score = score
