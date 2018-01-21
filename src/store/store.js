@@ -11,17 +11,13 @@ import {
 
 Vue.use(Vuex)
 
-const httpClient = axios.create({
-  baseURL: 'http://localhost:8080'
-})
-
 const state = {
   playerInfo: {
     department: '',
     id: '',
     name: '',
     handleName: '',
-    displayNameEnable: false,
+    displayNameEnable: 'false',
     score: 0,
     challengeCount: 0,
     adminFlg: false
@@ -33,8 +29,8 @@ const actions = {
   // commit は context.commit の分割代入
   [LOGIN] ({ commit, state }) {
     try {
-      httpClient.post(
-        '/player/' + state.playerInfo.id,
+      axios.post(
+        'http://localhost:8080/player',
         qs.stringify(state.playerInfo)
       ).then((res) => {
         commit(LOGIN, res.data)
@@ -54,13 +50,16 @@ const actions = {
   },
   [REGISTER_RESULT] ({ commit, state }, score, challengeCount) {
     commit(REGISTER_RESULT, score, challengeCount)
-    httpClient.put(
-      '/player/' + state.playerInfo.id + '/result',
-      qs.stringify(state)
+    axios.put(
+      'http://localhost:8080/player/' + state.playerInfo.id + '/result',
+      qs.stringify({
+        score: state.playerInfo.score,
+        challengeCount: state.playerInfo.challengeCount
+      })
     ).then((res) => {
       commit(REGISTER_RESULT, res.data)
     }).catch((res) => {
-      // 一旦nop
+      console.log(res)
     })
   }
 }
@@ -83,6 +82,9 @@ const mutations = {
     state.playerInfo.name = formData.name
     state.playerInfo.handleName = formData.handleName
     state.playerInfo.displayNameEnable = formData.displayNameEnable
+  },
+  setErrorMessage (state, message) {
+    state.errorMessage = message
   }
 }
 

@@ -41,8 +41,8 @@
     </el-form-item>
     <el-form-item label="ランキングで「おなまえ」はひょうじしたくない">
       <el-radio-group v-model="form.displayNameEnable">
-        <el-radio label="はい"></el-radio>
-        <el-radio label="とくにこだわらない"></el-radio>
+        <el-radio v-bind:label="true">はい</el-radio>
+        <el-radio v-bind:label="false">とくにこだわらない</el-radio>
       </el-radio-group>
     </el-form-item>
     <el-form-item>
@@ -72,7 +72,7 @@ export default {
         id: '',
         name: '',
         handleName: '',
-        displayNameEnable: ''
+        displayNameEnable: 'false'
       },
       rules: {
         department: [
@@ -145,7 +145,7 @@ export default {
 
 <style>
   .caution {
-    color: red
+    color: red;
   }
 
   .form {
