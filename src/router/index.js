@@ -16,7 +16,7 @@ export default new Router({
       component: Top
     },
     {
-      path: '/hello',
+      path: '/thanks',
       name: 'Hello',
       component: Hello
     },
