@@ -128,6 +128,7 @@ export default {
         this.buttonType = 'danger'
         this.buttonText = 'ほんばん'
         this.mondai = ''
+        this.input = ''
         this.inputDisabled = true
         this.focus = false
 
@@ -227,7 +228,7 @@ export default {
         // れんしゅうモード時の得点は更新しない。
         this.score = 0
       }
-      this.REGISTER_RESULT(this.score, this.challengeCount)
+      this.$store.dispatch(REGISTER_RESULT, {score: this.score, challengeCount: this.challengeCount})
     }
   }
 }
