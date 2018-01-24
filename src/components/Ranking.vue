@@ -4,8 +4,7 @@
     <el-table
       v-bind:data="tableData"
       stripe
-      class="rankingTable"
-      max-height="150">
+      class="rankingTable">
       <el-table-column
         label="ランク"
         type="index"
@@ -64,9 +63,11 @@ export default {
         console.log(this.temporaryTableData)
         for (let i = 0, l = this.temporaryTableData.length; i < l; i++) {
           if (this.temporaryTableData[i].displayNameEnable === true) {
-            this.temporaryTableData[i].name = ''
+            this.temporaryTableData[i].name = 'Hidden'
           }
+          this.temporaryTableData[i].handleName = this.temporaryTableData[i].handleName || '名無しさん'
           Vue.set(this.tableData, i, this.temporaryTableData[i])
+          if (i === 149) break
         }
       }).catch((res) => {
         router.push({ path: 'top' })
