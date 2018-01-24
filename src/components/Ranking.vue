@@ -4,7 +4,8 @@
     <el-table
       v-bind:data="tableData"
       stripe
-      class="rankingTable">
+      class="rankingTable"
+      max-height="150">
       <el-table-column
         label="ランク"
         type="index"
@@ -36,6 +37,7 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import axios from 'axios'
 import router from '../router'
 
@@ -53,24 +55,21 @@ export default {
   },
   mounted: function () {
     this.fetchRanking()
-    for (let i = 0, l = this.temporaryTableData.length; i < l; i++) {
-      if (this.temporaryTableData[i].displayNameEnable === false) {
-        this.temporaryTableData[i].name = ''
-      }
-    }
-    if (this.temporaryTableData.length >= 150) {
-      this.tableData = this.temporaryTableData.slice(0, 149)
-    } else {
-      this.tableData = this.temporaryTableData.slice();
-    }
   },
   methods: {
     fetchRanking: function () {
       httpClient.get('/player/ranking')
       .then((res) => {
         this.temporaryTableData = res.data
+        console.log(this.temporaryTableData)
+        for (let i = 0, l = this.temporaryTableData.length; i < l; i++) {
+          if (this.temporaryTableData[i].displayNameEnable === true) {
+            this.temporaryTableData[i].name = ''
+          }
+          Vue.set(this.tableData, i, this.temporaryTableData[i])
+        }
       }).catch((res) => {
-        router.push({ path: 'Top' })
+        router.push({ path: 'top' })
       })
     }
   }
