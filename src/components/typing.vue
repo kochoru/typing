@@ -10,6 +10,7 @@
       <h3 class="keepLeft">・れんしゅう、ほんばんで計2回プレイできます。</h3>
       <h3 class="keepLeft">・タイピングに成功した文字数がそのままスコアに加算されます。</h3>
       <h3 class="keepLeft">・その他、細かいバグがあるかもしれません。ごめんなさい。</h3>
+      <h3 class="keepLeft">・更新ボタンは押さないでください！！！</h3>
       <span slot="footer" class="dialog-footer">
         <el-button v-bind:plain="true" type="info" v-on:click="confirmDialogVisible = false">さぁ、れんしゅうボタンを押して早速スタートだ！</el-button>
       </span>
