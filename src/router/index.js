@@ -5,6 +5,7 @@ import Typing from '@/components/Typing'
 import Top from '@/components/Top'
 import Ranking from '@/components/Ranking'
 import Error from '@/components/Error'
+import PerfectRanking from '@/components/PerfectRanking'
 
 Vue.use(Router)
 
@@ -16,7 +17,7 @@ export default new Router({
       component: Top
     },
     {
-      path: '/hello',
+      path: '/thanks',
       name: 'Hello',
       component: Hello
     },
@@ -34,6 +35,11 @@ export default new Router({
       path: '/error',
       name: 'Error',
       component: Error
+    },
+    {
+      path: '/perfectRanking',
+      name: 'PerfectRanking',
+      component: PerfectRanking
     }
   ]
 })

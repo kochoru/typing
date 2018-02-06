@@ -48,16 +48,16 @@ const actions = {
       console.log(error)
     }
   },
-  [REGISTER_RESULT] ({ commit, state }, score, challengeCount) {
-    commit(REGISTER_RESULT, score, challengeCount)
+  [REGISTER_RESULT] ({ commit, state }, data) {
+    commit(REGISTER_RESULT, data)
     axios.put(
       'http://localhost:8080/player/' + state.playerInfo.id + '/result',
       qs.stringify({
-        score: state.playerInfo.score,
-        challengeCount: state.playerInfo.challengeCount
+        score: data.score,
+        challengeCount: data.challengeCount
       })
     ).then((res) => {
-      commit(REGISTER_RESULT, res.data)
+      //
     }).catch((res) => {
       console.log(res)
     })
@@ -72,9 +72,9 @@ const mutations = {
       state.errorMessage = 'チャレンジは一度のみです'
     }
   },
-  [REGISTER_RESULT] (state, score, challengeCount) {
-    state.playerInfo.score = score
-    state.playerInfo.challengeCount = challengeCount
+  [REGISTER_RESULT] (state, data) {
+    state.playerInfo.score = data.score
+    state.playerInfo.challengeCount = data.challengeCount
   },
   bindTopForm (state, formData) {
     state.playerInfo.department = formData.department

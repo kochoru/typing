@@ -11,16 +11,15 @@
     v-bind:rules="rules">
     <el-form-item label="Department" prop="department">
       <el-select
-        size="large"
         v-model="form.department"
-        placeholder=""
-        clearable="clearable"
-        required>
+        placeholder="所属する部署を選択してください"
+        clearable>
         <el-option
           v-for="item in departmentOptions"
           v-bind:key="item.value"
           v-bind:label="item.label"
-          v-bind:value="item.value"></el-option>
+          v-bind:value="item.value">
+        </el-option>
       </el-select>
     </el-form-item>
     <el-form-item label="ID" prop="id">
@@ -37,13 +36,11 @@
     </el-form-item>
     <el-form-item label="ハンドルネーム">
       <el-input v-model="form.handleName"
-        placeholder="好きなハンドルネームを入力ください"></el-input>
+        placeholder="好きなハンドルネームを入力ください(任意)"></el-input>
     </el-form-item>
     <el-form-item label="ランキングで「おなまえ」はひょうじしたくない">
-      <el-radio-group v-model="form.displayNameEnable">
-        <el-radio v-bind:label="true">はい</el-radio>
-        <el-radio v-bind:label="false">とくにこだわらない</el-radio>
-      </el-radio-group>
+      <el-radio v-model="form.displayNameEnable" label="true">はい</el-radio>
+      <el-radio v-model="form.displayNameEnable" label="false">とくにこだわらない</el-radio>
     </el-form-item>
     <el-form-item>
       <el-button type="primary" v-on:click="submitForm('form')">ゲームを開始する</el-button>
