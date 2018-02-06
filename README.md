@@ -1,14 +1,17 @@
 # Typing ゲーム
 
-かんたんなタイピングゲームです。
+かんたんなタイピングゲームです。<br>
+サーバサイドのAPIとの連携を前提としてますが、<br>
+一応単体でもある程度動きます。<br>
 
 ## Build Setup
 
 ``` bash
 git clone https://github.com/kochoru/typing.git
+
 npm install
 
-# serve with hot reload at localhost:8080
+# serve with hot reload at localhost:8081
 npm run dev
 
 # build for production with minification
@@ -26,3 +29,8 @@ npm run e2e
 # run all tests
 npm test
 ```
+
+## パス
+
+### タイピング画面
+* http://localhost:8081/#/typing
