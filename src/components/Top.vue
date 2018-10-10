@@ -133,7 +133,7 @@ export default {
       .then((res) => {
         this.departmentOptions = res.data
       }).catch((res) => {
-        console.log(res)
+        //
       })
     }
   }

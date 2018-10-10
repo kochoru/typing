@@ -39,13 +39,11 @@ const actions = {
         } else {
           router.push({ path: '/typing' })
         }
-      }).catch((res) => {
-        console.log(res)
+      }).catch(() => {
         router.push({ path: '/' })
       })
     } catch (error) {
-      // Debug用try catch
-      console.log(error)
+      //
     }
   },
   [REGISTER_RESULT] ({ commit, state }, data) {
@@ -56,10 +54,10 @@ const actions = {
         score: data.score,
         challengeCount: data.challengeCount
       })
-    ).then((res) => {
+    ).then(() => {
       //
-    }).catch((res) => {
-      console.log(res)
+    }).catch(() => {
+      //
     })
   }
 }

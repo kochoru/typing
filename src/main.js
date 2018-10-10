@@ -3,7 +3,7 @@
 import Vue from 'vue'
 import ElementUI from 'element-ui'
 import locale from 'element-ui/lib/locale/lang/ja'
-import 'element-ui/lib/theme-default/index.css'
+import 'element-ui/lib/theme-chalk/index.css'
 import '../static/nicomoji.css'
 import App from './App'
 import router from './router'
@@ -24,11 +24,7 @@ Vue.directive('focus', {
 
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',
   router,
   store,
-  template: '<App/>',
-  components: {
-    App
-  }
-})
+  render: h => h(App)
+}).$mount('#app')
