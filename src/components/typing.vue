@@ -3,11 +3,14 @@
     <el-dialog
       title="ルール・注意事項"
       v-bind:visible.sync="confirmDialogVisible"
-      size="small">
+      size="small"
+      show-close="false"
+      close-on-click-modal="false">
       <h3 class="keepLeft">・文字の削除に関し、Deleteボタンは対応してません。Backspaceで消してください。</h3>
       <h3 class="keepLeft">・れんしゅう、ほんばんで計2回プレイできます。</h3>
       <h3 class="keepLeft">・タイピングに成功した文字数がそのままスコアに加算されます。</h3>
       <h3 class="keepLeft">・その他、細かいバグがあるかもしれません。ごめんなさい。</h3>
+      <h3 class="keepLeft">・更新ボタンは押さないでください！！！</h3>
       <span slot="footer" class="dialog-footer">
         <el-button v-bind:plain="true" type="info" v-on:click="confirmDialogVisible = false">さぁ、れんしゅうボタンを押して早速スタートだ！</el-button>
       </span>
@@ -15,7 +18,10 @@
     <el-dialog
       title="結果発表～！！"
       v-bind:visible.sync="resultDialogVisible"
-      size="small">
+      size="small"
+      show-close="false"
+      close-on-click-modal="false"
+      v-on:close="transitionToThanks">
       <h1>あなたの得点は {{ score }} 点でした！</h1>
       <h1>おめでとうございます！！</h1>
       <h2>プレイありがとうございました。結果は後日発表します。</h2>
@@ -127,6 +133,7 @@ export default {
         this.buttonDisabled = false
         this.buttonType = 'danger'
         this.buttonText = 'ほんばん'
+        this.input = ''
         this.mondai = ''
         this.inputDisabled = true
         this.focus = false
@@ -146,6 +153,9 @@ export default {
     ...mapMutations([
       'setErrorMessage'
     ]),
+    transitionToThanks: function (event) {
+      router.push({path: 'thanks'})
+    },
     checkKeyCode: function (event) {
       let keyStr = String.fromCharCode(event.keyCode)
       let inputStrArr = this.input.split('')
@@ -227,6 +237,7 @@ export default {
         // れんしゅうモード時の得点は更新しない。
         this.score = 0
       }
+      this.$store.dispatch(REGISTER_RESULT, {score: this.score, challengeCount: this.challengeCount})
       this.REGISTER_RESULT(this.score, this.challengeCount)
     }
   }
