@@ -2,7 +2,7 @@
   "name": "typing",
   "version": "1.0.0",
   "description": "A Vue.js project",
-  "author": "Taku Kuchiki",
+  "author": "kochoru",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -11,19 +11,19 @@
   },
   "dependencies": {
     "@xkeshi/vue-countdown": "^1.0.1",
-    "axios": "^0.18.0",
-    "element-ui": "^2.4.8",
-    "es6-promise": "^4.2.5",
-    "qs": "^6.5.2",
-    "vue": "^2.5.17",
-    "vue-router": "^3.0.1",
-    "vuex": "^3.0.1"
+    "axios": "^0.18.1",
+    "element-ui": "^2.9.1",
+    "es6-promise": "^4.2.8",
+    "qs": "^6.7.0",
+    "vue": "^2.6.10",
+    "vue-router": "^3.0.6",
+    "vuex": "^3.1.1"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.0.0",
-    "@vue/cli-plugin-eslint": "^3.0.0",
-    "@vue/cli-service": "^3.0.0",
-    "vue-template-compiler": "^2.5.17"
+    "@vue/cli-plugin-babel": "^3.8.0",
+    "@vue/cli-plugin-eslint": "^3.8.0",
+    "@vue/cli-service": "^3.8.0",
+    "vue-template-compiler": "^2.6.10"
   },
   "engines": {
     "node": ">= 4.0.0",
